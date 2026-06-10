@@ -1,0 +1,48 @@
+﻿@model AuctionModel
+
+@{
+        const string hideAuctionSettingsAttributeName = "ProductPage.HideAuctionSettings";
+    var customer = await workContext.GetCurrentCustomerAsync();
+    var hideAuctionSettingsBlock = await genericAttributeService.GetAttributeAsync<bool>(customer, hideAuctionSettingsAttributeName) && !await Html.IsTourActiveAsync();
+}
+<nop-card asp-name="product-info" asp-icon="fas fa-gavel" asp-title="@T("Plugins.Misc.EliteAuctions.Settings")" asp-hide-block-attribute-name="@hideAuctionSettingsBlock" asp-hide="@hideAuctionSettingsBlock" asp-advanced="false">
+    <div class="card-body">
+    <div id="product-detail-area">
+        <div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="EnableProxyBidding" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="EnableProxyBidding" />
+                    </div>
+        </div>
+        </div>
+
+        <button type="button" id="save-auction">Save Auction</button>
+    </div>
+    </div>
+</div>
+</nop-card>
+<script>
+$("#save-auction").click(function () {
+    const data = {
+        ProductId: $("#Id").val(),
+        EnableAuction: true,
+        EnableProxyBidding: $("#EnableProxyBidding").val()
+    };
+
+    console.log(data);
+
+    $.ajax({
+        url: '/Admin/Auction/Save',
+        type: 'POST',
+        data: data,
+        success: function () {
+            alert('Saved');
+        }
+    });
+});
+</script>
+

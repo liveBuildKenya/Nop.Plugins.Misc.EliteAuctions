@@ -1,0 +1,11 @@
+{
+  "Group": "Misc",
+  "FriendlyName": "Elite Auctions",
+  "SystemName": "Misc.EliteAuctions",
+  "Version": "1.00.0",
+  "SupportedVersions": [ "5.00" ],
+  "Author": "Workspace Technologies Ltd",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Misc.EliteAuctions.dll",
+  "Description": "This plugin allows you to manage elite auctions in your store"
+}
