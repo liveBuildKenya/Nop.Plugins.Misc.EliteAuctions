@@ -1,8 +1,7 @@
-﻿using Nop.Plugin.Misc.EliteAuctions.Auctions.Domain;
-using Nop.Plugin.Misc.EliteAuctions.Auctions.Services;
-using Nop.Plugin.Misc.EliteAuctions.Components;
+﻿using Nop.Plugin.Misc.EliteAuctions.Auctions.Componenets;
+using Nop.Plugin.Misc.EliteAuctions.Bids.Componenets;
+using Nop.Plugin.Misc.EliteAuctions.Installation;
 using Nop.Services.Cms;
-using Nop.Services.Localization;
 using Nop.Services.Plugins;
 using Nop.Web.Framework.Infrastructure;
 
@@ -10,38 +9,17 @@ namespace Nop.Plugin.Misc.EliteAuctions;
 
 public class EliteAuctionsPlugin : BasePlugin, IWidgetPlugin
 {
-    private readonly ILocalizationService _localizationService;
-    private readonly IAuctionStageService _auctionStageService;
+    private readonly IEliteAuctionsInstallationService _eliteAuctionsInstallationService;
 
-    public EliteAuctionsPlugin(ILocalizationService localizationService,
-        IAuctionStageService auctionStageService)
+    public EliteAuctionsPlugin(IEliteAuctionsInstallationService eliteAuctionsInstallationService)
     {
-        _localizationService = localizationService;
-        _auctionStageService = auctionStageService;
+        _eliteAuctionsInstallationService = eliteAuctionsInstallationService;
     }
     public override async Task InstallAsync()
     {
-        await _localizationService.AddOrUpdateLocaleResourceAsync(new Dictionary<string, string>
-        {
-            ["Plugins.Misc.EliteAuctions.EnableProxyBidding"] = "Enable Proxy Bidding",
-            ["Plugins.Misc.EliteAuctions.Settings"] = "Auction Settings",
+        await _eliteAuctionsInstallationService.InstallSystemAuctionStages();
 
-        });
-        var preparationAuctionStage = new AuctionStage { DisplayOrder = 1, Name = "Preperation" };
-        await _auctionStageService.InsertAuctionStage(preparationAuctionStage);
-
-        var openingAuctionStage = new AuctionStage { DisplayOrder = 2, Name = "Opening" };
-        await _auctionStageService.InsertAuctionStage(openingAuctionStage);
-        
-        var biddingAuctionStage = new AuctionStage { DisplayOrder = 3, Name = "Bidding" };
-        await _auctionStageService.InsertAuctionStage(biddingAuctionStage);
-
-        var closingAuctionStage = new AuctionStage { DisplayOrder = 4, Name = "Closing" };
-        await _auctionStageService.InsertAuctionStage(closingAuctionStage);
-
-        var settlemtnAuctionStage = new AuctionStage { DisplayOrder = 5, Name = "Settlement" };
-        await _auctionStageService.InsertAuctionStage(settlemtnAuctionStage);
-
+        await _eliteAuctionsInstallationService.InstallLocaleResources();
 
         await base.InstallAsync();
     }
@@ -60,7 +38,8 @@ public class EliteAuctionsPlugin : BasePlugin, IWidgetPlugin
         {
             AdminWidgetZones.ProductDetailsBlock,
             PublicWidgetZones.ProductBoxAddinfoBefore,
-            PublicWidgetZones.ProductPriceTop
+            PublicWidgetZones.ProductPriceTop,
+            PublicWidgetZones.ProductDetailsAddInfo
         });
     }
 
@@ -74,6 +53,9 @@ public class EliteAuctionsPlugin : BasePlugin, IWidgetPlugin
 
         if (widgetZone.Equals(PublicWidgetZones.ProductPriceTop))
             return typeof(CountdownPublicViewComponent);
+
+        if (widgetZone.Equals(PublicWidgetZones.ProductDetailsAddInfo))
+            return typeof(BidPublicViewComponent);
 
         return null;
     }

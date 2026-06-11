@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Nop.Plugin.Misc.EliteAuctions.Auctions.Domain;
 using Nop.Plugin.Misc.EliteAuctions.Auctions.Models;
-using Nop.Plugin.Misc.EliteAuctions.Auctions.Services;
+using Nop.Plugin.Misc.EliteAuctions.MarketPlace;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Mvc.Filters;
@@ -12,56 +11,26 @@ namespace Nop.Plugin.Misc.EliteAuctions.Controllers;
 [AuthorizeAdmin]
 public class AuctionController : BasePluginController
 {
-    private readonly IAuctionService _auctionService;
-    private readonly IAuctionStageService _auctionStageService;
-    private readonly IAuctionStageHistoryService _auctionStageHistoryService;
+    private readonly IMarketPlaceFactory _marketPlaceFactory;
 
-    public AuctionController(IAuctionService auctionService,
-        IAuctionStageService auctionStageService,
-        IAuctionStageHistoryService auctionStageHistoryService)
+    public AuctionController(IMarketPlaceFactory marketPlaceFactory)
     {
-        _auctionService = auctionService;
-        _auctionStageService = auctionStageService;
-        _auctionStageHistoryService = auctionStageHistoryService;
+        _marketPlaceFactory = marketPlaceFactory;
     }
 
     [HttpPost]
-    public async Task<IActionResult> Save(AuctionModel model)
+    public async Task<IActionResult> ConfigureOptions(AuctionModel model)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        if (!model.EnableAuction)
+        if (!model.ActivateAuction)
         {
             ModelState.AddModelError("Auction-Disabled", "Auction not enabled for this product");
             return BadRequest(ModelState);
         }
 
-        var auction = await _auctionService.GetAuctionByProductId(model.ProductId);
-
-        if (auction == null)
-        {
-            auction = new Auction
-            {
-                ProductId = model.ProductId,
-                IsProxyBiddingEnabled = model.EnableProxyBidding,
-                WinningCustomerId = null
-            };
-
-            await _auctionService.InsertAuction(auction);
-        }
-
-        var auctionStageHistory = await _auctionStageHistoryService.GetCurrentAuctionStageByAuctionId(auction.Id);
-        if (auctionStageHistory == null)
-        {
-            var auctionStage = _auctionStageService.GetBeginingAuctionStage();
-
-            await _auctionStageHistoryService.InsertAuctionStageHistory(new AuctionStageHistory
-            {
-                AuctionId = auction.Id,
-                AuctionStageId = auctionStage.Id
-            });
-        }
+        await _marketPlaceFactory.PrepareProductAuction(model);
 
         return Ok();
     }

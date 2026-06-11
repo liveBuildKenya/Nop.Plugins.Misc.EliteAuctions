@@ -11,13 +11,12 @@ public interface IAuctionService
     /// Gets an auction by product id
     /// </summary>
     /// <param name="productId">Product Identifier</param>
-    /// <returns></returns>
+    /// <returns>Auction</returns>
     Task<Auction> GetAuctionByProductId(int productId);
 
     /// <summary>
     /// Inserts an auction
     /// </summary>
     /// <param name="auction">Auction</param>
-    /// <returns>Auction</returns>
     Task InsertAuction(Auction auction);
 }

@@ -28,11 +28,6 @@ public class Bid : BaseEntity
     public decimal Amount { get; set; }
 
     /// <summary>
-    /// Gets or sets the maximum bid amount
-    /// </summary>
-    public decimal MaximumBidAmount { get; set; }
-
-    /// <summary>
     /// Gets or sets the date and time of entity creation
     /// </summary>
     public DateTime CreatedOnUtc { get; set; }

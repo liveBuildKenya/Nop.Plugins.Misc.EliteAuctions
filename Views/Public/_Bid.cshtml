@@ -1,0 +1,23 @@
+@model ProductDetailsModel.AddToCartModel
+
+
+<button id="place-bid" type="button" class="button-1 add-to-cart-button">@T("Plugins.Misc.EliteAuctions.PlaceBid").Text</button>
+
+<script asp-location="Footer">
+$("#place-bid").click(function () {
+    const data = {
+        ProductId: @Model.ProductId,
+        CustomerEnteredPrice: @Model.CustomerEnteredPrice
+    };
+
+    $.ajax({
+        url: '/Bid/PlaceBid',
+        type: 'POST',
+        data: data,
+        success: function () {
+            alert('Saved');
+        }
+    });
+
+});
+</script>

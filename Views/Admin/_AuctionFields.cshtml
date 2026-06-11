@@ -5,22 +5,22 @@
     var customer = await workContext.GetCurrentCustomerAsync();
     var hideAuctionSettingsBlock = await genericAttributeService.GetAttributeAsync<bool>(customer, hideAuctionSettingsAttributeName) && !await Html.IsTourActiveAsync();
 }
-<nop-card asp-name="product-info" asp-icon="fas fa-gavel" asp-title="@T("Plugins.Misc.EliteAuctions.Settings")" asp-hide-block-attribute-name="@hideAuctionSettingsBlock" asp-hide="@hideAuctionSettingsBlock" asp-advanced="false">
+<nop-card asp-name="product-info" asp-icon="fas fa-gavel" asp-title="@T("Plugins.Misc.EliteAuctions.AuctionOptions")" asp-hide-block-attribute-name="@hideAuctionSettingsBlock" asp-hide="@hideAuctionSettingsBlock" asp-advanced="false">
     <div class="card-body">
     <div id="product-detail-area">
         <div>
 
                 <div class="form-group row">
                     <div class="col-md-3">
-                        <nop-label asp-for="EnableProxyBidding" />
+                        <nop-label asp-for="ActivateAuction" />
                     </div>
                     <div class="col-md-9">
-                        <nop-editor asp-for="EnableProxyBidding" />
+                        <nop-editor asp-for="ActivateAuction" />
                     </div>
         </div>
         </div>
 
-        <button type="button" id="save-auction">Save Auction</button>
+        <button type="button" id="save-auction" class="button button-primary">@T("Plugins.Misc.EliteAuctions.ApplyAuctionSettings")</button>
     </div>
     </div>
 </div>
@@ -29,14 +29,13 @@
 $("#save-auction").click(function () {
     const data = {
         ProductId: $("#Id").val(),
-        EnableAuction: true,
-        EnableProxyBidding: $("#EnableProxyBidding").val()
+        ActivateAuction: $("#ActivateAuction").val()
     };
 
     console.log(data);
 
     $.ajax({
-        url: '/Admin/Auction/Save',
+        url: '/Admin/Auction/ConfigureOptions',
         type: 'POST',
         data: data,
         success: function () {

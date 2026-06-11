@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Nop.Core.Domain.Catalog;
 using Nop.Plugin.Misc.EliteAuctions.Auctions.Models;
 using Nop.Services.Catalog;
 using Nop.Web.Framework.Components;
 using Nop.Web.Framework.Infrastructure;
 using Nop.Web.Models.Catalog;
 
-namespace Nop.Plugin.Misc.EliteAuctions.Components;
+namespace Nop.Plugin.Misc.EliteAuctions.Bids.Componenets;
 
 public class CountdownPublicViewComponent : NopViewComponent
 {

@@ -1,39 +1,39 @@
 ﻿@model CountdownModel
 
-@if(Model.IsOnAuction)
+@if (Model.IsOnAuction)
 {
-<div id="auction-countdown" class="price actual-price" data-end="@Model.EndDateUtc">
-    Ends in: <span id="timer"></span>
-</div>
+    <div id="auction-countdown" class="price actual-price" data-end="@Model.EndDateUtc">
+        @T("Plugins.Misc.EliteAuctions.EndsIn").Text <span id="timer"></span>
+    </div>
 
-<script asp-location="Footer">
-    const end = new Date(document.getElementById("auction-countdown").dataset.end);
+    <script asp-location="Footer">
+        const end = new Date(document.getElementById("auction-countdown").dataset.end);
 
-    function updateTimer() {
-        const now = new Date();
-        const diff = end - now;
+        function updateTimer() {
+            const now = new Date();
+            const diff = end - now;
 
-        if (diff <= 0) {
-            document.getElementById("timer").innerHTML = "Auction ended";
-            return;
+            if (diff <= 0) {
+                document.getElementById("timer").innerHTML = "Auction ended";
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor(diff / (1000 * 60 * 60) % 24);
+            const minutes = Math.floor(diff / (1000 * 60) % 60);
+            const seconds = Math.floor(diff / 1000 % 60);
+
+            let output = "";
+
+            if (days > 0) output += `${days}d `;
+            if (hours > 0 || days > 0) output += `${hours}h `;
+            if (minutes > 0 || hours > 0 || days > 0) output += `${minutes}m `;
+            output += `${seconds}s`;
+
+            document.getElementById("timer").innerHTML = output.trim();
         }
 
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(diff / (1000 * 60 * 60) % 24);
-        const minutes = Math.floor(diff / (1000 * 60) % 60);
-        const seconds = Math.floor(diff / 1000 % 60);
-
-        let output = "";
-
-        if (days > 0) output += `${days}d `;
-        if (hours > 0 || days > 0) output += `${hours}h `;
-        if (minutes > 0 || hours > 0 || days > 0) output += `${minutes}m `;
-        output += `${seconds}s`;
-
-        document.getElementById("timer").innerHTML = output.trim();
-    }
-
-    setInterval(updateTimer, 1000);
-</script>
+        setInterval(updateTimer, 1000);
+    </script>
 
 }

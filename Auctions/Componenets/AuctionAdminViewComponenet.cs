@@ -5,7 +5,7 @@ using Nop.Web.Areas.Admin.Models.Catalog;
 using Nop.Web.Framework.Components;
 using Nop.Web.Framework.Infrastructure;
 
-namespace Nop.Plugin.Misc.EliteAuctions.Components;
+namespace Nop.Plugin.Misc.EliteAuctions.Auctions.Componenets;
 
 /// <summary>
 /// Represents the view component for the auction administration interface.
@@ -19,6 +19,12 @@ public class AuctionAdminViewComponent : NopViewComponent
         _auctionService = auctionService;
     }
 
+    /// <summary>
+    /// Prepares the auction option configuration view in the admin area
+    /// </summary>
+    /// <param name="widgetZone">Widget Zone</param>
+    /// <param name="additionalData">Additional data</param>
+    /// <returns>Widget</returns>
     public async Task<IViewComponentResult> InvokeAsync(string widgetZone, object additionalData)
     {
         if (!widgetZone.Equals(AdminWidgetZones.ProductDetailsBlock))
@@ -40,8 +46,7 @@ public class AuctionAdminViewComponent : NopViewComponent
         var auctionModel = new AuctionModel
         {
             ProductId = product.Id,
-            EnableProxyBidding = auction?.IsProxyBiddingEnabled ?? false,
-            EnableAuction = auction != null,
+            ActivateAuction = auction != null,
         };
 
 

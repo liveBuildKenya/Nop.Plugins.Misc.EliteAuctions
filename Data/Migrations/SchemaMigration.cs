@@ -19,6 +19,9 @@ public class SchemaMigration : Migration
 
     public override void Down()
     {
-
+        this.DeleteTableIfExists<Auction>();
+        this.DeleteTableIfExists<AuctionStage>();
+        this.DeleteTableIfExists<AuctionStageHistory>();
+        this.DeleteTableIfExists<Bid>();
     }
 }

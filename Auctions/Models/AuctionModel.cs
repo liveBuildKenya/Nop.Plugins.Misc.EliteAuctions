@@ -3,6 +3,9 @@ using Nop.Web.Framework.Mvc.ModelBinding;
 
 namespace Nop.Plugin.Misc.EliteAuctions.Auctions.Models;
 
+/// <summary>
+/// Represents the auction model
+/// </summary>
 public record AuctionModel : BaseNopEntityModel
 {
     /// <summary>
@@ -13,12 +16,6 @@ public record AuctionModel : BaseNopEntityModel
     /// <summary>
     /// Gets or sets a value indicating whether an auction should be enabled
     /// </summary>
-    [NopResourceDisplayName("Plugins.Misc.EliteAuctions.EnableAuction")]
-    public bool EnableAuction { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether proxy bidding is enabled
-    /// </summary>
-    [NopResourceDisplayName("Plugins.Misc.EliteAuctions.EnableProxyBidding")]
-    public bool EnableProxyBidding{ get; set; }
+    [NopResourceDisplayName("Plugins.Misc.EliteAuctions.ActivateAuction")]
+    public bool ActivateAuction { get; set; }
 }

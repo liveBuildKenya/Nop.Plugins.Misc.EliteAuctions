@@ -15,5 +15,5 @@ public interface IBidService
     /// </summary>
     /// <param name="auctionId">Auction Identifier</param>
     /// <returns>Highest Bid</returns>
-    Task<Bid> GetHighestBId(int auctionId);
+    Task<Bid> GetHighestBid(int auctionId);
 }

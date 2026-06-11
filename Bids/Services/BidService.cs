@@ -5,19 +5,29 @@ namespace Nop.Plugin.Misc.EliteAuctions.Bids.Services;
 
 public class BidService : IBidService
 {
+    #region Fields
+
     private readonly IRepository<Bid> _bidRepository;
+
+    #endregion
+
+    #region Constructor
 
     public BidService(IRepository<Bid> bidRepository)
     {
         _bidRepository = bidRepository;
     }
 
+    #endregion
+
+    #region Methods
+
     /// <summary>
     /// Gets the highest bid for a given auction. If there are multiple bids with the same amount, the earliest one is returned.
     /// </summary>
     /// <param name="auctionId">Auction Identifier</param>
     /// <returns>Highest Bid</returns>
-    public Task<Bid> GetHighestBId(int auctionId)
+    public Task<Bid> GetHighestBid(int auctionId)
     {
         return _bidRepository.Table
             .Where(b => b.AuctionId == auctionId)
@@ -39,4 +49,6 @@ public class BidService : IBidService
 
         return newBid;
     }
+
+    #endregion
 }

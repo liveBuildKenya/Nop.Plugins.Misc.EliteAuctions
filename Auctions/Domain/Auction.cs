@@ -18,11 +18,6 @@ namespace Nop.Plugin.Misc.EliteAuctions.Auctions.Domain
         public int ProductId { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether proxy bidding is enabled
-        /// </summary>
-        public bool IsProxyBiddingEnabled { get; set; }
-
-        /// <summary>
         /// Gets or sets the identifier of the winning customer
         /// </summary>
         public int? WinningCustomerId { get; set; }

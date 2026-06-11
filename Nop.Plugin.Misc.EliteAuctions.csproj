@@ -6,7 +6,7 @@
     <Authors>Workspace Technologies Ltd</Authors>
     <PackageLicenseUrl>PACKAGE_LICENSE_URL</PackageLicenseUrl>
     <PackageProjectUrl>PACKAGE_PROJECT_URL</PackageProjectUrl>
-    <RepositoryUrl>REPOSITORY_URL</RepositoryUrl>
+    <RepositoryUrl>https://github.com/liveBuildKenya/Nop.Plugins.Misc.EliteAuctions</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <OutputPath>$(SolutionDir)\Presentation\Nop.Web\Plugins\Misc.EliteAuctions</OutputPath>
     <OutDir>$(OutputPath)</OutDir>
@@ -15,8 +15,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="$(SolutionDir)\Presentation\Nop.Web.Framework\Nop.Web.Framework.csproj" />
-    <ProjectReference Include="..\..\Presentation\Nop.Web\Nop.Web.csproj" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(SolutionDir)\Presentation\Nop.Web\Nop.Web.csproj" />
     <ClearPluginAssemblies Include="$(SolutionDir)\Build\ClearPluginAssemblies.proj" />
   </ItemGroup>
   <ItemGroup>
@@ -26,12 +28,17 @@
     <Content Include="Views\Admin\_AuctionFields.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Views\Public\_ProductCountdown.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\_ViewImports.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Update="Views\Public\_ProductCountdown.cshtml">
+    <None Update="Views\Public\_Bid.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
