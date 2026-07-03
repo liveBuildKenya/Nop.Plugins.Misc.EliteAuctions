@@ -3,7 +3,7 @@
 @if (Model.IsOnAuction)
 {
     <div id="auction-countdown" class="price actual-price" data-end="@Model.EndDateUtc">
-        @T("Plugins.Misc.EliteAuctions.EndsIn").Text <span id="timer"></span>
+        <span id="timer"></span>
     </div>
 
     <script asp-location="Footer">
@@ -23,7 +23,7 @@
             const minutes = Math.floor(diff / (1000 * 60) % 60);
             const seconds = Math.floor(diff / 1000 % 60);
 
-            let output = "";
+            let output = "@T("Plugins.Misc.EliteAuctions.EndsIn").Text ";
 
             if (days > 0) output += `${days}d `;
             if (hours > 0 || days > 0) output += `${hours}h `;

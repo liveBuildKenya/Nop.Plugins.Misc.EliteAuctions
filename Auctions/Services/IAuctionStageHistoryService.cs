@@ -20,4 +20,5 @@ public interface IAuctionStageHistoryService
     /// <param name="auctionStageHistory">Auction stage history</param>
     /// <returns></returns>
     Task InsertAuctionStageHistory(AuctionStageHistory auctionStageHistory);
+
 }

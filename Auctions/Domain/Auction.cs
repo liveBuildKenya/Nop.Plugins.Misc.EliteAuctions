@@ -9,7 +9,8 @@ namespace Nop.Plugin.Misc.EliteAuctions.Auctions.Domain
     {
         public Auction()
         {
-            this.CreatedOnUtc = DateTime.UtcNow;
+            DateTimeCreatedUtc = DateTime.UtcNow;
+            DateTimeUpdatedUtc = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -23,8 +24,48 @@ namespace Nop.Plugin.Misc.EliteAuctions.Auctions.Domain
         public int? WinningCustomerId { get; set; }
 
         /// <summary>
+        /// Gets or sets the store id
+        /// </summary>
+        public int StoreId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the starting bid price
+        /// </summary>
+        public decimal StartingBidPrice { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current bid price
+        /// </summary>
+        public decimal CurrentBidPrice { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reserve bid price
+        /// </summary>
+        public decimal ReserveBidPrice { get; set; }
+
+        /// <summary>
+        /// Gets or sets the start date and time in UTC
+        /// </summary>
+        public DateTime StartDateTimeUtc { get; set; }
+
+        /// <summary>
+        /// Gets or sets the end date and time in UTC
+        /// </summary>
+        public DateTime EndDateTimeUtc { get; set; }
+
+        /// <summary>
+        /// Gets or sets the seconds to extend the EndDateTimeUtc when a bid is placed withing those seconds. Preventing bid snipping.
+        /// </summary>
+        public int ExtensionTriggerSeconds { get; set; }
+
+        /// <summary>
         /// Gets or sets the date and time of entity creation
         /// </summary>
-        public DateTime CreatedOnUtc { get; set; }
+        public DateTime DateTimeCreatedUtc { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date and time of entity update
+        /// </summary>
+        public DateTime DateTimeUpdatedUtc { get; set; }
     }
 }

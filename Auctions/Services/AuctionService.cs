@@ -26,6 +26,16 @@ public class AuctionService : IAuctionService
     #region Methods
 
     /// <summary>
+    /// Gets an auction by identifier
+    /// </summary>
+    /// <param name="auctionId">AuctionIdentifier</param>
+    /// <returns>Auction</returns>
+    public async Task<Auction> GetAuctionById(int auctionId)
+    {
+        return await _auctionRepository.GetByIdAsync(auctionId);
+    }
+
+    /// <summary>
     /// Gets an auction by product id
     /// </summary>
     /// <param name="productId">Product id</param>
@@ -33,10 +43,17 @@ public class AuctionService : IAuctionService
     public async Task<Auction> GetAuctionByProductId(int productId)
     {
         var auction = await _auctionRepository.Table
-            .Where(auction => auction.ProductId == productId)
+            .Where(auction => auction.ProductId == productId && auction.EndDateTimeUtc > DateTime.UtcNow)
             .FirstOrDefaultAsync();
 
         return auction;
+    }
+
+    public async Task<List<Auction>> GetAuctionsOnBidding()
+    {
+        return await _auctionRepository.Table
+            .Where(auction => auction.WinningCustomerId == null)
+            .ToListAsync();
     }
 
     /// <summary>
@@ -48,6 +65,20 @@ public class AuctionService : IAuctionService
         ArgumentNullException.ThrowIfNull(auction);
 
         await _auctionRepository.InsertAsync(auction);
+    }
+
+    /// <summary>
+    /// Updates an auction
+    /// </summary>
+    /// <param name="auction">Auction</param>
+    /// <returns></returns>
+    public async Task UpdateAuction(Auction auction)
+    {
+        ArgumentNullException.ThrowIfNull(auction);
+
+        auction.DateTimeUpdatedUtc = DateTime.UtcNow;
+
+        await _auctionRepository.UpdateAsync(auction);
     }
 
     #endregion

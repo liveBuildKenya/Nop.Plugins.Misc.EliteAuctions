@@ -1,23 +1,32 @@
 @model ProductDetailsModel.AddToCartModel
 
-
-<button id="place-bid" type="button" class="button-1 add-to-cart-button">@T("Plugins.Misc.EliteAuctions.PlaceBid").Text</button>
+<div>
+    <button id="place-bid" type="button" class="button-1 add-to-cart-button">@T("Plugins.Misc.EliteAuctions.PlaceBid").Text</button>
+        <p>Current Winning bid: @Model.CustomerEnteredPrice.ToString("F2")</p>
+</div>
 
 <script asp-location="Footer">
-$("#place-bid").click(function () {
-    const data = {
-        ProductId: @Model.ProductId,
-        CustomerEnteredPrice: @Model.CustomerEnteredPrice
-    };
+    $("#place-bid").click(function () {
+        const data = {
+            ProductId: @Model.ProductId,
+            CustomerEnteredPrice: $('.enter-price-input').val()
+        };
 
-    $.ajax({
-        url: '/Bid/PlaceBid',
-        type: 'POST',
-        data: data,
-        success: function () {
-            alert('Saved');
-        }
+        $.ajax({
+            url: '/Bid/PlaceBid',
+            type: 'POST',
+            data: data,
+            success: function () {
+                location.reload();
+            },
+            error: function (xhr) {
+                if (xhr.status === 401) {
+                    // Redirect to login with returnUrl (relative path only!)
+                    window.location.href = '/login?returnUrl=' + encodeURIComponent(window.location.pathname + window.location.search);
+                } else {
+                    alert("Error placing bid.");
+                }
+            }
+        });
     });
-
-});
 </script>

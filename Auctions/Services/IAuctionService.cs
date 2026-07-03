@@ -19,4 +19,24 @@ public interface IAuctionService
     /// </summary>
     /// <param name="auction">Auction</param>
     Task InsertAuction(Auction auction);
+
+    /// <summary>
+    /// Updates an auction
+    /// </summary>
+    /// <param name="auction">Auction</param>
+    /// <returns></returns>
+    Task UpdateAuction(Auction auction);
+
+    /// <summary>
+    /// Gets an auction by identifier
+    /// </summary>
+    /// <param name="auctionId">AuctionIdentifier</param>
+    /// <returns>Auction</returns>
+    Task<Auction> GetAuctionById(int auctionId);
+
+    /// <summary>
+    /// Gets auctions on bidding
+    /// </summary>
+    /// <returns>Auction list</returns>
+    Task<List<Auction>> GetAuctionsOnBidding();
 }

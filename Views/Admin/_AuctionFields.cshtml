@@ -7,21 +7,64 @@
 }
 <nop-card asp-name="product-info" asp-icon="fas fa-gavel" asp-title="@T("Plugins.Misc.EliteAuctions.AuctionOptions")" asp-hide-block-attribute-name="@hideAuctionSettingsBlock" asp-hide="@hideAuctionSettingsBlock" asp-advanced="false">
     <div class="card-body">
-    <div id="product-detail-area">
-        <div>
-
-                <div class="form-group row">
-                    <div class="col-md-3">
-                        <nop-label asp-for="ActivateAuction" />
+        <div id="product-detail-area">
+            <div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="ActivateAuction" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="ActivateAuction" />
+                        </div>
                     </div>
-                    <div class="col-md-9">
-                        <nop-editor asp-for="ActivateAuction" />
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="StartDateTimeUtc" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="StartDateTimeUtc" />
+                            <span asp-validation-for="StartDateTimeUtc"></span>
+                        </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="EndDateTimeUtc" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="EndDateTimeUtc" />
+                            <span asp-validation-for="EndDateTimeUtc"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="StartingBidPrice" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="StartingBidPrice" asp-postfix="@Model.PrimaryStoreCurrencyCode" />
+                            <span asp-validation-for="StartingBidPrice"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="ReserveBidPrice"  />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="ReserveBidPrice" asp-postfix="@Model.PrimaryStoreCurrencyCode" />
+                            <span asp-validation-for="ReserveBidPrice"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="ExtensionTriggerSeconds" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="ExtensionTriggerSeconds" />
+                            <span asp-validation-for="ExtensionTriggerSeconds"></span>
+                        </div>
+                    </div>
+            </div>
+            <button type="button" id="save-auction" class="btn btn-primary">@T("Plugins.Misc.EliteAuctions.ApplyAuctionSettings")</button>
         </div>
-        </div>
-
-        <button type="button" id="save-auction" class="button button-primary">@T("Plugins.Misc.EliteAuctions.ApplyAuctionSettings")</button>
-    </div>
     </div>
 </div>
 </nop-card>
@@ -29,17 +72,20 @@
 $("#save-auction").click(function () {
     const data = {
         ProductId: $("#Id").val(),
-        ActivateAuction: $("#ActivateAuction").val()
+        ActivateAuction: $("#ActivateAuction").val(),
+        ExtensionTriggerSeconds: $("#ExtensionTriggerSeconds").val(),
+        StartDateTimeUtc: $("#StartDateTimeUtc").val(),
+        EndDateTimeUtc: $("#EndDateTimeUtc").val(),
+        StartingBidPrice: $("#StartingBidPrice").val(),
+        ReserveBidPrice: $("#ReserveBidPrice").val()
     };
-
-    console.log(data);
 
     $.ajax({
         url: '/Admin/Auction/ConfigureOptions',
         type: 'POST',
         data: data,
         success: function () {
-            alert('Saved');
+            location.reload();
         }
     });
 });

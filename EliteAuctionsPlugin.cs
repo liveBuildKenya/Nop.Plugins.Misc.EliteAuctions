@@ -21,6 +21,8 @@ public class EliteAuctionsPlugin : BasePlugin, IWidgetPlugin
 
         await _eliteAuctionsInstallationService.InstallLocaleResources();
 
+        await _eliteAuctionsInstallationService.InstallScheduledTasks();
+
         await base.InstallAsync();
     }
     public bool HideInWidgetList => false;

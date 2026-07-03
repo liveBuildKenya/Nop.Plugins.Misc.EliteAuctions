@@ -54,7 +54,7 @@ public class AuctionStageService : IAuctionStageService
     public async Task<AuctionStage> GetInitialAuctionStage()
     {
         return await _auctionStageRepository.Table
-            .OrderByDescending(x => x.DisplayOrder)
+            .OrderBy(x => x.DisplayOrder)
             .FirstOrDefaultAsync();
     }
 
