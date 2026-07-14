@@ -49,10 +49,10 @@ public class AuctionAdminViewComponent : NopViewComponent
             ActivateAuction = auction != null,
             PrimaryStoreCurrencyCode = product.PrimaryStoreCurrencyCode,
             StartingBidPrice = auction?.StartingBidPrice ?? product.MinimumCustomerEnteredPrice,
-            ReserveBidPrice = (decimal)auction?.ReserveBidPrice,
+            ReserveBidPrice = auction?.ReserveBidPrice ?? 0m,
             StartDateTimeUtc = auction?.StartDateTimeUtc,
             EndDateTimeUtc = auction?.EndDateTimeUtc,
-            ExtensionTriggerSeconds = (int)auction?.ExtensionTriggerSeconds
+            ExtensionTriggerSeconds = auction?.ExtensionTriggerSeconds ?? 0
         };
 
 
